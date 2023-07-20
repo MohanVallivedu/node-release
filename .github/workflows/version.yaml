@@ -1,0 +1,32 @@
+name: Bump version
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Semver type of new version (major / minor / patch)'
+        required: true
+        type: choice
+        options: 
+        - patch
+        - minor
+        - major
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out
+      uses: actions/checkout@v3
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        cache: 'npm'
+
+    - name: npm install
+      run: npm ci
+
+    - name: Update version
+      run: npm version ${{ github.event.inputs.version }} -m "Bump version to v%s"
+
+    - name: Push changes and new tag
+      run: git push origin main --follow-tags
