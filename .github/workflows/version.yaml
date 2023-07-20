@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Semver type of new version (major / minor / patch)'
+        description: 'Select the new version type'
         required: true
         type: choice
         options: 
@@ -29,12 +29,22 @@ jobs:
 
     - name:  'Automated Version Bump'
       uses:  'phips28/gh-action-bump-version@master'
+      id: version-bump
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         version-type: ${{ github.event.inputs.version }}
         tag-prefix: 'v'
-        commit-message: 'CI: Bump version to v{{version}}'
+        commit-message: 'CI: Bump version to {{version}}'
 
     - name: Push changes and new tag
       run: git push origin main --follow-tags
+
+    - uses: actions/checkout@v3
+      with:
+        ref: my-branch
+
+    - name: Create new Release
+      run: gh release create ${{ steps.version-bump.outputs.newTag }} --generate-notes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
