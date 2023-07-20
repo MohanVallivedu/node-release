@@ -17,7 +17,11 @@ app.get('/id', (req, res) => {
     res.send('Server id is good!');
 });
 
-
 app.delete('/id', (req, res) => {
     res.send('Deleted id');
+});
+
+app.put('/id', (req, res) => {
+    console.log('server id');
+    res.send('Updated server id');
 });
