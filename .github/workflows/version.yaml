@@ -1,4 +1,4 @@
-name: Bump version
+name: Release new version
 on:
   workflow_dispatch:
     inputs:
@@ -16,19 +16,18 @@ jobs:
     permissions:
       contents: write
     steps:
-    - name: Check out
+    - name: Check out source code
       uses: actions/checkout@v3
 
-    - uses: actions/setup-node@v3
+    - name: Setup node
+      uses: actions/setup-node@v3
       with:
         node-version: 18
-        cache: 'npm'
 
-    - name: npm install
-      run: npm ci
+    - run: npm ci
 
-    - name:  'Automated Version Bump'
-      uses:  'phips28/gh-action-bump-version@master'
+    - name: 'Bump version and create a new tag'
+      uses: 'phips28/gh-action-bump-version@master'
       id: version-bump
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -37,7 +36,7 @@ jobs:
         tag-prefix: 'v'
         commit-message: 'CI: Bump version to {{version}}'
 
-    - name: Push changes and new tag
+    - name: Push changes along with new tag
       run: git push origin main --follow-tags
 
     - name: Create new Release
