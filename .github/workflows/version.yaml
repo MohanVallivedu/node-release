@@ -33,6 +33,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         version-type: ${{ github.event.inputs.version }}
+        tag-prefix: 'v'
+        commit-message: 'CI: Bump version to v{{version}}'
 
     - name: Push changes and new tag
       run: git push origin main --follow-tags
