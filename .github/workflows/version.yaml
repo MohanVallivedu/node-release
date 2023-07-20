@@ -27,6 +27,8 @@ jobs:
 
     - name: Update version
       run: npm version ${{ github.event.inputs.version }} -m "Bump version to v%s"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Push changes and new tag
       run: git push origin main --follow-tags
