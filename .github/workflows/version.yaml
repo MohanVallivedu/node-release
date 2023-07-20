@@ -13,6 +13,8 @@ on:
 jobs:
   bump-version:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
     - name: Check out
       uses: actions/checkout@v3
@@ -25,10 +27,12 @@ jobs:
     - name: npm install
       run: npm ci
 
-    - name: Update version
-      run: npm version ${{ github.event.inputs.version }} -m "Bump version to v%s"
+    - name:  'Automated Version Bump'
+      uses:  'phips28/gh-action-bump-version@master'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        version-type: ${{ github.event.inputs.version }}
 
     - name: Push changes and new tag
       run: git push origin main --follow-tags
