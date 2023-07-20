@@ -13,8 +13,6 @@ on:
 jobs:
   bump-version:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
     - name: Check out source code
       uses: actions/checkout@v3
@@ -28,18 +26,18 @@ jobs:
 
     - name: 'Bump version and create a new tag'
       uses: 'phips28/gh-action-bump-version@master'
-      id: version-bump
+      id: bump-version
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        version-type: ${{ github.event.inputs.version }}
         tag-prefix: 'v'
+        version-type: ${{ github.event.inputs.version }}
         commit-message: 'CI: Bump version to {{version}}'
 
     - name: Push changes along with new tag
       run: git push origin main --follow-tags
 
     - name: Create new Release
-      run: gh release create ${{ steps.version-bump.outputs.newTag }} --generate-notes
+      run: gh release create ${{ steps.bump-version.outputs.newTag }} --generate-notes
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
