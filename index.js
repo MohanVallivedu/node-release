@@ -9,6 +9,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/status', (req, res) => {
+    console.log('SUCCESS');
     res.send('Server is on!');
 });
 
