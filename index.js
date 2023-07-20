@@ -16,3 +16,8 @@ app.get('/id', (req, res) => {
     console.log('server id');
     res.send('Server id is good!');
 });
+
+app.put('/id', (req, res) => {
+    console.log('server id');
+    res.send('Updated server id');
+});
