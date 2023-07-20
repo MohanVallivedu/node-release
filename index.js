@@ -16,3 +16,8 @@ app.get('/status', (req, res) => {
 app.get('/id', (req, res) => {
     res.send('Server id is good!');
 });
+
+
+app.delete('/id', (req, res) => {
+    res.send('Deleted id');
+});
