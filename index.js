@@ -11,3 +11,7 @@ app.get('/', (req, res) => {
 app.get('/status', (req, res) => {
     res.send('Server is on!');
 });
+
+app.get('/id', (req, res) => {
+    res.send('Server id is good!');
+});
