@@ -9,12 +9,16 @@ app.get('/', (req, res) => {
 });
 
 app.get('/status', (req, res) => {
+    console.log('SUCCESS');
     res.send('Server is on!');
 });
 
 app.get('/id', (req, res) => {
-    console.log('server id');
     res.send('Server id is good!');
+});
+
+app.delete('/id', (req, res) => {
+    res.send('Deleted id');
 });
 
 app.put('/id', (req, res) => {
