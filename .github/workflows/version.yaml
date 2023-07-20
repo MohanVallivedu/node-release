@@ -40,10 +40,6 @@ jobs:
     - name: Push changes and new tag
       run: git push origin main --follow-tags
 
-    - uses: actions/checkout@v3
-      with:
-        ref: my-branch
-
     - name: Create new Release
       run: gh release create ${{ steps.version-bump.outputs.newTag }} --generate-notes
       env:
