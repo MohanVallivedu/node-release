@@ -11,7 +11,7 @@ on:
         - minor
         - major
 jobs:
-  bump-version:
+  create-new-tag:
     runs-on: ubuntu-latest
     permissions:
       contents: write
